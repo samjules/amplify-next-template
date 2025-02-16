@@ -7,6 +7,8 @@ import "./../app/app.css";
 import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
+import { Tabs } from '@aws-amplify/ui-react';
+
 
 Amplify.configure(outputs);
 
@@ -32,7 +34,20 @@ export default function App() {
   }
 
   return (
-    <main>
+    
+
+    <div>
+
+  <Tabs
+    defaultValue={'Tab 1'}
+    items={[
+      { label: 'Tab 1', value: 'Tab 1', content: 'Tab content #1' },
+      { label: 'Tab 2', value: 'Tab 2', content: 'Tab content #2' },
+      { label: 'Tab 3', value: 'Tab 3', content: 'Tab content #3' },
+    ]}
+  />
+
+      <main>
       <h1>My todos</h1>
       <button onClick={createTodo}>+ new</button>
       <ul>
@@ -48,5 +63,11 @@ export default function App() {
         </a>
       </div>
     </main>
+
+
+    </div>
+
+    
+    
   );
 }
