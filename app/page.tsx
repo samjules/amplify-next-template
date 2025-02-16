@@ -8,7 +8,7 @@ import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import { Tabs } from '@aws-amplify/ui-react';
-import Todos from "./header";
+import Todos from "./Todos";
 
 
 Amplify.configure(outputs);
@@ -43,7 +43,7 @@ export default function App() {
     defaultValue={'Tab 1'}
     items={[
 
-      { label: 'Dashboard', value: 'Tab 1', content: < Todos/> },
+      { label: 'Dashboard', value: 'Tab 1', content : <Todos /> },
       { label: 'Fleet', value: 'Tab 2', content: 'Tab content #2' },
       { label: 'Flight Time', value: 'Tab 3', content: 'Tab content #3' },
       { label: 'Records', value: 'Tab 3', content: 'Tab content #3' },
