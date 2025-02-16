@@ -6,14 +6,22 @@ import "./../app/app.css";
 import "@aws-amplify/ui-react/styles.css";
 import { Tabs } from '@aws-amplify/ui-react';
 import Todos from "../components/Todos";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
     
 
 export default function home(){
 
+    
+  const { signOut } = useAuthenticator();
+
+    
+
   return(
+
     <div>
 
+      <button onClick={signOut}>Sign out</button>
   <Tabs
     defaultValue={'Tab 1'}
     items={[
