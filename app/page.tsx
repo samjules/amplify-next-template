@@ -5,7 +5,7 @@
 import "./../app/app.css";
 import "@aws-amplify/ui-react/styles.css";
 import { Tabs } from '@aws-amplify/ui-react';
-import Todos from '../app/Todos';
+import Todos from "../components/Todos";
 
     
 
@@ -38,4 +38,3 @@ export default function home(){
     
     
     
- 
