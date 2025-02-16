@@ -8,6 +8,7 @@ import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import { Tabs } from '@aws-amplify/ui-react';
+import Todos from "./header";
 
 
 Amplify.configure(outputs);
@@ -41,28 +42,17 @@ export default function App() {
   <Tabs
     defaultValue={'Tab 1'}
     items={[
-      { label: 'Tab 1', value: 'Tab 1', content: 'Tab content #1' },
-      { label: 'Tab 2', value: 'Tab 2', content: 'Tab content #2' },
-      { label: 'Tab 3', value: 'Tab 3', content: 'Tab content #3' },
+
+      { label: 'Dashboard', value: 'Tab 1', content: < Todos/> },
+      { label: 'Fleet', value: 'Tab 2', content: 'Tab content #2' },
+      { label: 'Flight Time', value: 'Tab 3', content: 'Tab content #3' },
+      { label: 'Records', value: 'Tab 3', content: 'Tab content #3' },
+      { label: 'Settings', value: 'Tab 3', content: 'Tab content #3' },
+      { label: 'Customer Managment', value: 'Tab 3', content: 'Tab content #3' },
+      
     ]}
   />
 
-      <main>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/">
-          Review next steps of this tutorial.
-        </a>
-      </div>
-    </main>
 
 
     </div>
