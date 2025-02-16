@@ -8,7 +8,7 @@ import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import { Tabs } from '@aws-amplify/ui-react';
-import Todos from "./Todos";
+import Todos from '../app/Todos';
 
 
 Amplify.configure(outputs);
