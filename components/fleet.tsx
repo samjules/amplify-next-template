@@ -7,6 +7,7 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import AircraftCard from "../components/AircraftCard";
 import { Menu, MenuItem, View } from '@aws-amplify/ui-react';
+import AddAircraft from "./addaircraft";
 
 
 Amplify.configure(outputs);
@@ -34,9 +35,8 @@ const Fleet: React.FC = () => {
       <div>
         <View width="4rem">
         <Menu>
-          <MenuItem>Option 1</MenuItem>
-          <MenuItem>Option 2</MenuItem>
-          <MenuItem>Option 3</MenuItem>
+          <MenuItem> <AddAircraft /> </MenuItem>
+          
         </Menu>
       </View>
 
