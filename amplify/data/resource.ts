@@ -12,6 +12,15 @@ const schema = a.schema({
       content: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+
+    Aircraft: a
+    .model({
+      Tail_Number: a.string(),
+      Model: a.string(),  // Add a field for the aircraft model
+      Image: a.string(),  // Add a field for the image URL
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
 });
 
 export type Schema = ClientSchema<typeof schema>;
