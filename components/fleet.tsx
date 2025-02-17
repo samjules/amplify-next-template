@@ -47,13 +47,13 @@ const Fleet: React.FC = () => {
       <div className="aircraft-list">
         {aircraft.map((aircraftItem) => (
           <AircraftCard
-            key={aircraftItem.id}
-            tailNumber={aircraftItem.Tail_Number}
-            model={aircraftItem.Model}
-            image={aircraftItem.Image}
-            timeRemaining={aircraftItem.TimeRemaining}
-            tsmoh={aircraftItem.TSMOH}
-          />
+          key={aircraftItem.id}
+          tailNumber={aircraftItem.Tail_Number ?? "Unknown"}
+          model={aircraftItem.Model ?? "Unknown"}
+          image={aircraftItem.Image ?? ""}
+          timeRemaining={aircraftItem.TimeRemaining ?? 0}
+          tsmoh={aircraftItem.TSMOH ?? 0}
+        />
         ))}
       </div>
     </div>
