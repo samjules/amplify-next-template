@@ -5,7 +5,7 @@ import outputs from "@/amplify_outputs.json";
 import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
-import AircraftCard from "../components/aircraftcard";
+import AircraftCard from "../components/AircraftCard";
 
 Amplify.configure(outputs);
 
