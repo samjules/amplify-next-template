@@ -23,6 +23,17 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
+     FlightTime: a
+    .model({
+      startHobbs: a.integer(),
+      endHobbs: a.integer(),
+      startTach: a.integer(),
+      endTach: a.integer(),
+      pilot: a.string(),
+      aircraftId: a.string(), // This should reference the aircraft model
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
 });
 
 export type Schema = ClientSchema<typeof schema>;
