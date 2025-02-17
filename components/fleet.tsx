@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import AircraftCard from "../components/AircraftCard";
+import { Menu, MenuItem, View } from '@aws-amplify/ui-react';
+
 
 Amplify.configure(outputs);
 
@@ -24,26 +26,24 @@ const Fleet: React.FC = () => {
     listAircraft();
   }, []);
 
-  function addAircraft() {
-    const tailNumber = window.prompt("Enter Tail Number");
-    const model = window.prompt("Enter Aircraft Model");
-    const image = window.prompt("Enter Image URL");
-    const timeRemaining = Number(window.prompt("Enter Time Remaining (hrs)"));
-    const tsmoh = Number(window.prompt("Enter TSMOH (hrs)"));
-
-    client.models.Aircraft.create({
-      Tail_Number: tailNumber,
-      Model: model,
-      Image: image,
-      TimeRemaining: timeRemaining,
-      TSMOH: tsmoh,
-    });
-  }
+  
 
   return (
     <div>
+
+      <div>
+        <View width="4rem">
+        <Menu>
+          <MenuItem>Option 1</MenuItem>
+          <MenuItem>Option 2</MenuItem>
+          <MenuItem>Option 3</MenuItem>
+        </Menu>
+      </View>
+
+      </div>
+
+      
       <h1>Aircraft Fleet</h1>
-      <button onClick={addAircraft}>+ Add Aircraft</button>
       <div className="aircraft-list">
         {aircraft.map((aircraftItem) => (
           <AircraftCard
