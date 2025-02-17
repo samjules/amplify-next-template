@@ -8,7 +8,7 @@ import { Tabs } from '@aws-amplify/ui-react';
 import Todos from "../components/Todos";
 import Aircraft from "@/components/fleet";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import FlightTime from "@/components/flighttime";
+import FlightTime from "../components/flighttime";
 
     
 
