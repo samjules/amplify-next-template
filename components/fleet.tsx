@@ -32,19 +32,6 @@ const Fleet: React.FC = () => {
   return (
     <div>
 
-      <div>
-
-      <Tabs
-  justifyContent="flex-start"
-  defaultValue='Tab 1'
-  items={[
-    { label: 'Add Aircraft', value: 'Tab 1', content: <AddAircraft /> },
-   
-  ]}
-/>
-
-      </div>
-
       
       <h1>Aircraft Fleet</h1>
       <div className="aircraft-list">
