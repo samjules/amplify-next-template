@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import AircraftCard from "../components/AircraftCard";
-import { Menu, MenuItem, View } from '@aws-amplify/ui-react';
+import { Tabs } from '@aws-amplify/ui-react';
 import AddAircraft from "./addaircraft";
 
 
@@ -33,12 +33,15 @@ const Fleet: React.FC = () => {
     <div>
 
       <div>
-        <View width="4rem">
-        <Menu>
-          <MenuItem> <AddAircraft /> </MenuItem>
-          
-        </Menu>
-      </View>
+
+      <Tabs
+  justifyContent="flex-start"
+  defaultValue='Tab 1'
+  items={[
+    { label: 'Add Aircraft', value: 'Tab 1', content: <AddAircraft /> },
+   
+  ]}
+/>
 
       </div>
 
