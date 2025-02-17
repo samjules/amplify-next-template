@@ -5,6 +5,7 @@ import outputs from "@/amplify_outputs.json";
 import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
+import AircraftCard from "../components/aircraftcard";
 
 Amplify.configure(outputs);
 
@@ -27,11 +28,15 @@ const Fleet: React.FC = () => {
     const tailNumber = window.prompt("Enter Tail Number");
     const model = window.prompt("Enter Aircraft Model");
     const image = window.prompt("Enter Image URL");
+    const timeRemaining = Number(window.prompt("Enter Time Remaining (hrs)"));
+    const tsmoh = Number(window.prompt("Enter TSMOH (hrs)"));
 
     client.models.Aircraft.create({
       Tail_Number: tailNumber,
       Model: model,
       Image: image,
+      TimeRemaining: timeRemaining,
+      TSMOH: tsmoh,
     });
   }
 
@@ -41,11 +46,14 @@ const Fleet: React.FC = () => {
       <button onClick={addAircraft}>+ Add Aircraft</button>
       <div className="aircraft-list">
         {aircraft.map((aircraftItem) => (
-          <div key={aircraftItem.id} className="aircraft-card">
-            <h3>{aircraftItem.Tail_Number}</h3>
-            <p>Model: {aircraftItem.Model}</p>
-            {aircraftItem.Image && <img src={aircraftItem.Image} />}
-          </div>
+          <AircraftCard
+            key={aircraftItem.id}
+            tailNumber={aircraftItem.Tail_Number}
+            model={aircraftItem.Model}
+            image={aircraftItem.Image}
+            timeRemaining={aircraftItem.TimeRemaining}
+            tsmoh={aircraftItem.TSMOH}
+          />
         ))}
       </div>
     </div>

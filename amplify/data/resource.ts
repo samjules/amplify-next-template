@@ -16,8 +16,10 @@ const schema = a.schema({
     Aircraft: a
     .model({
       Tail_Number: a.string(),
-      Model: a.string(),  // Add a field for the aircraft model
-      Image: a.string(),  // Add a field for the image URL
+      Model: a.string(),
+      Image: a.string(),
+      TimeRemaining: a.integer(),
+      TSMOH: a.integer(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
