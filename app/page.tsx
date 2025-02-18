@@ -6,7 +6,6 @@ import "./../app/app.css";
 import "@aws-amplify/ui-react/styles.css";
 import { Tabs } from '@aws-amplify/ui-react';
 import Todos from "../components/Todos";
-import Aircraft from "@/components/fleet";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 
     
@@ -31,7 +30,7 @@ export default function home(){
         items={[
 
           { label: 'Dashboard', value: 'Tab 1', content : <Todos /> },
-          { label: 'Fleet', value: 'Tab 2', content: <Aircraft /> },
+          { label: 'Fleet', value: 'Tab 2', content: '<Aircraft />' },
           { label: 'Flight Time', value: 'Tab 3', content: '<FlightTime />' },
           { label: 'Records', value: 'Tab 3', content: 'Tab content #3' },
           { label: 'Settings', value: 'Tab 3', content: 'Tab content #3' },
