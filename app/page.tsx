@@ -8,7 +8,6 @@ import { Tabs } from '@aws-amplify/ui-react';
 import Todos from "../components/Todos";
 import Aircraft from "@/components/fleet";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import FlightTime from "../components/flighttime";
 
     
 
@@ -33,7 +32,7 @@ export default function home(){
 
           { label: 'Dashboard', value: 'Tab 1', content : <Todos /> },
           { label: 'Fleet', value: 'Tab 2', content: <Aircraft /> },
-          { label: 'Flight Time', value: 'Tab 3', content: <FlightTime /> },
+          { label: 'Flight Time', value: 'Tab 3', content: '<FlightTime />' },
           { label: 'Records', value: 'Tab 3', content: 'Tab content #3' },
           { label: 'Settings', value: 'Tab 3', content: 'Tab content #3' },
           { label: 'Customer Managment', value: 'Tab 3', content: 'Tab content #3' },

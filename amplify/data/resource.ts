@@ -17,13 +17,14 @@ const schema = a.schema({
     .model({
       Tail_Number: a.string(),
       Model: a.string(),
-      Image: a.string(),
+      imageKey: a.string(),  // Updated for storing S3 image file path
+      logbookKey: a.string(), // New field for storing logbook file path
       TimeRemaining: a.integer(),
       TSMOH: a.integer(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
-
-     FlightTime: a
+    
+    FlightTime: a
     .model({
       startHobbs: a.integer(),
       endHobbs: a.integer(),
@@ -33,7 +34,6 @@ const schema = a.schema({
       aircraftId: a.string(), // This should reference the aircraft model
     })
     .authorization((allow) => [allow.publicApiKey()]),
-
 });
 
 export type Schema = ClientSchema<typeof schema>;
