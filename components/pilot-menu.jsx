@@ -4,7 +4,7 @@ import "../app/app.css";
 // ✅ Define props in the function parameters
 const MainMenu = ({ onToggleFlightTime }) => {
   return (
-    <div className="sub-menu">
+    <div className="main-menu">
       <div>
         {/* ✅ Ensure button calls onToggleFlightTime */}
         <button className="button-menu" onClick={onToggleFlightTime}>
