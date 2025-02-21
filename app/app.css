@@ -6,7 +6,7 @@
 
 
 body{
-  background-image: url(/public/pexels-chaikong2511-104757.jpg);
+  background-image: url(/pexels-chaikong2511-104757.jpg);
   background-size: cover;
   display: flex;
   flex-direction: row;
@@ -19,8 +19,7 @@ body{
   flex-direction: row;
   justify-content: space-between;
   padding: 10px;
-  background: url(../public/pexels-chaikong2511-104757.jpg);
-  background-size: cover;
+  
 }
 .person-icon {
   width: 24px;
