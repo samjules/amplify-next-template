@@ -153,3 +153,8 @@ overflow: hidden; /* Hides excess parts */
   padding-left: 10px;
 }
 
+.row{
+  display: flex;
+  flex-direction: row;
+}
+
