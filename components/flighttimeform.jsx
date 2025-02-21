@@ -68,7 +68,7 @@ const FlightTimeForm = () => {
   };
 
   return (
-    <div>
+    <div className="row">
       <div className="main-menu">
         <form className="flight_time" onSubmit={handleSubmit}>
           <div>
@@ -111,7 +111,13 @@ const FlightTimeForm = () => {
         </form>
       </div>
 
+
+
+
       {/* ✅ Repeater Section to Show Flight Times */}
+
+      <div className="main-menu">
+
       <div className="flight-times-list">
         <h2>Flight Time Records</h2>
         {flightTimes.length > 0 ? (
@@ -129,6 +135,10 @@ const FlightTimeForm = () => {
         )}
       </div>
     </div>
+
+      </div>
+
+      
   );
 };
 
