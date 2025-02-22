@@ -1,12 +1,12 @@
 import React from "react";
 import "../app/app.css";
 
-// ✅ Define props in the function parameters
-const MainMenu = ({ onToggleFlightTime }) => {
+// ✅ Accept both toggle functions as props
+const MainMenu = ({ onToggleFlightTime, onToggleAircraft }) => {
   return (
     <div className="main-menu">
       <div>
-        {/* ✅ Ensure button calls onToggleFlightTime */}
+        {/* ✅ Toggle Flight Time view */}
         <button className="button-menu" onClick={onToggleFlightTime}>
           <img className="person-icon" alt="" src="/person.svg" />
           <div className="pilots">Flight Time</div>
@@ -14,9 +14,10 @@ const MainMenu = ({ onToggleFlightTime }) => {
       </div>
 
       <div>
-        <button className="button-menu">
+        {/* ✅ Toggle Aircraft view */}
+        <button className="button-menu" onClick={onToggleAircraft}>
           <img className="person-icon" alt="" src="/person.svg" />
-          <div className="pilots">Discrepancy</div>
+          <div className="pilots">Aircraft</div>
         </button>
       </div>
 
@@ -30,5 +31,4 @@ const MainMenu = ({ onToggleFlightTime }) => {
   );
 };
 
-// ✅ Ensure MainMenu accepts `onToggleFlightTime`
 export default MainMenu;
