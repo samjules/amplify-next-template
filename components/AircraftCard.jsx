@@ -2,18 +2,33 @@
 
 import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
+import { getUrl } from "@aws-amplify/storage"; // Import S3 URL fetcher
 import "../app/app.css"; // Keeping styles
 
 const client = generateClient(); // AWS Amplify Data Client
 
 const AircraftCard = () => {
   const [aircraftList, setAircraftList] = useState([]); // Store aircraft data
+  const [imageUrls, setImageUrls] = useState({}); // Store fetched image URLs
 
   // Fetch aircraft data from the database
   const fetchAircraftData = async () => {
     try {
       const { data } = await client.models.Aircraft.list(); // Fetch all aircraft
-      setAircraftList(data); // Store in state
+      setAircraftList(data);
+
+      // Fetch image URLs for each aircraft
+      const urls = {};
+      for (const aircraft of data) {
+        if (aircraft.imageKey) {
+          try {
+            urls[aircraft.id] = await getUrl({ path: aircraft.imageKey });
+          } catch (error) {
+            console.error(`Error fetching image for ${aircraft.Tail_Number}:`, error);
+          }
+        }
+      }
+      setImageUrls(urls); // Update state with image URLs
     } catch (error) {
       console.error("Error fetching aircraft data:", error);
     }
@@ -35,7 +50,7 @@ const AircraftCard = () => {
               <h2>{aircraft.Tail_Number}</h2>
               <img
                 className="welcome_image"
-                src={aircraft.imageKey ? aircraft.imageKey : "/pexels-olly-762020.jpg"} 
+                src={imageUrls[aircraft.id] || "/pexels-olly-762020.jpg"} 
                 alt={`Aircraft ${aircraft.Tail_Number}`}
               />
 
