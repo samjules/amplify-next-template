@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import "../app/app.css";
 import { generateClient } from "aws-amplify/data";
+import { StorageManager } from "@aws-amplify/ui-react-storage";
 
 const client = generateClient();
 
@@ -18,6 +19,10 @@ const AddAircraft = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileUpload = async ({ key }) => {
+    setFormData((prev) => ({ ...prev, imageKey: key }));
   };
 
   const handleSubmit = async (e) => {
@@ -61,9 +66,15 @@ const AddAircraft = () => {
           <input className="input" name="Model" value={formData.Model} onChange={handleChange} />
         </div>
 
+        {/* 🔹 File Upload Drop Zone */}
         <div>
-          <label className="label">Image Key</label>
-          <input className="input" name="imageKey" value={formData.imageKey} onChange={handleChange} />
+          <label className="label">Upload Aircraft Image</label>
+          <StorageManager
+            path="aircraft-images/"
+            acceptedFileTypes={["image/*"]}
+            maxFileCount={1}
+            onUploadSuccess={handleFileUpload}
+          />
         </div>
 
         <div>
