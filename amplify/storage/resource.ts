@@ -1,15 +1,19 @@
-import { defineStorage } from '@aws-amplify/backend';
+import { defineStorage } from "@aws-amplify/backend";
 
 export const storage = defineStorage({
-    name: 'amplifyTeamDrive',
-    access: (allow) => ({
-      'profile-pictures/{entity_id}/*': [
-        allow.guest.to(['read']),
-        allow.entity('identity').to(['read', 'write', 'delete'])
-      ],
-      'picture-submissions/*': [
-        allow.authenticated.to(['read','write']),
-        allow.guest.to(['read', 'write'])
-      ],
-    })
-  });
+  name: "amplifyTeamDrive",
+  access: (allow) => ({
+    "profile-pictures/{entity_id}/*": [
+      allow.guest.to(["read"]),
+      allow.entity("identity").to(["read", "write", "delete"]),
+    ],
+    "picture-submissions/*": [
+      allow.authenticated.to(["read", "write"]),
+      allow.guest.to(["read", "write"]),
+    ],
+    "pictures/*": [
+      allow.authenticated.to(["read", "write"]),  // 🔹 Authenticated users can upload
+      allow.guest.to(["read"]),  // 🔹 Guests can view images
+    ],
+  }),
+});

@@ -21,6 +21,7 @@ const AddAircraft = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // 🔹 Handles successful file upload
   const handleFileUpload = async ({ key }) => {
     setFormData((prev) => ({ ...prev, imageKey: key }));
   };
@@ -31,7 +32,7 @@ const AddAircraft = () => {
       await client.models.Aircraft.create({
         Tail_Number: formData.Tail_Number,
         Model: formData.Model,
-        imageKey: formData.imageKey,
+        imageKey: formData.imageKey,  // 🔹 Stores image path from S3
         logbookKey: formData.logbookKey,
         TimeRemaining: parseInt(formData.TimeRemaining),
         TSMOH: parseInt(formData.TSMOH),
@@ -70,7 +71,7 @@ const AddAircraft = () => {
         <div>
           <label className="label">Upload Aircraft Image</label>
           <StorageManager
-            path="aircraft-images/"
+            path="pictures/"  // 🔹 Uploads images to "pictures/" in S3
             acceptedFileTypes={["image/*"]}
             maxFileCount={1}
             onUploadSuccess={handleFileUpload}
