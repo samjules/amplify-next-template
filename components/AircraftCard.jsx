@@ -1,6 +1,6 @@
 "use client"; // Required for Next.js client-side rendering
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { generateClient } from "aws-amplify/data";
 import { getUrl } from "@aws-amplify/storage"; // Import S3 URL fetcher
 import "../app/app.css"; // Keeping styles
@@ -16,23 +16,29 @@ const AircraftCard = () => {
     try {
       const { data } = await client.models.Aircraft.list(); // Fetch all aircraft
       setAircraftList(data);
-
-      // Fetch image URLs for each aircraft
-      const urls = {};
-      for (const aircraft of data) {
-        if (aircraft.imageKey) {
-          try {
-            urls[aircraft.id] = await getUrl({ path: aircraft.imageKey });
-          } catch (error) {
-            console.error(`Error fetching image for ${aircraft.Tail_Number}:`, error);
-          }
-        }
-      }
-      setImageUrls(urls); // Update state with image URLs
+      fetchAircraftImages(data);
     } catch (error) {
       console.error("Error fetching aircraft data:", error);
     }
   };
+
+  // Fetch images dynamically from S3
+  const fetchAircraftImages = useCallback(async (aircraftData) => {
+    const urls = {};
+    await Promise.all(
+      aircraftData.map(async (aircraft) => {
+        if (aircraft.imageKey) {
+          try {
+            const url = await getUrl({ path: `aircraft-images/${aircraft.imageKey}` });
+            urls[aircraft.id] = url;
+          } catch (error) {
+            console.error(`Error fetching image for ${aircraft.Tail_Number}:`, error);
+          }
+        }
+      })
+    );
+    setImageUrls(urls); // Ensure state updates properly
+  }, []);
 
   // Fetch data when component mounts
   useEffect(() => {
@@ -50,7 +56,7 @@ const AircraftCard = () => {
               <h2>{aircraft.Tail_Number}</h2>
               <img
                 className="welcome_image"
-                src={imageUrls[aircraft.id] || "/pexels-olly-762020.jpg"} 
+                src={imageUrls[aircraft.id] || "/loading-placeholder.jpg"} 
                 alt={`Aircraft ${aircraft.Tail_Number}`}
               />
 
