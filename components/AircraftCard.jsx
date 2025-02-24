@@ -4,8 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { generateClient } from "aws-amplify/data";
 import { getUrl } from "@aws-amplify/storage"; // Import S3 URL fetcher
 import Link from "next/link"; // Import Next.js Link for navigation
-import "../app/app.css"; // Import styles
-
+import "../app/app.css"
 const client = generateClient(); // AWS Amplify Data Client
 
 const AircraftCard = () => {
