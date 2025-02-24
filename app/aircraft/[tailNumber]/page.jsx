@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Use router to get dynamic params
 import { generateClient } from "aws-amplify/data";
 import { getUrl } from "@aws-amplify/storage";
-import "../app/app.css";
 
 
 const client = generateClient();
