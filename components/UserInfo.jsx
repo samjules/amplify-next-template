@@ -9,9 +9,8 @@ const client = generateClient();
 
 const Profile = () => {
   const [formData, setFormData] = useState({
-    Model: "",
     name: "",
-    profilePictureKey: "",
+    profilePictureKey: "",  // Correct field name here
   });
 
   const handleChange = (e) => {
@@ -20,40 +19,39 @@ const Profile = () => {
 
   // 🔹 Handles successful file upload
   const handleFileUpload = async ({ key }) => {
-    setFormData((prev) => ({ ...prev, imageKey: key }));
+    setFormData((prev) => ({ ...prev, profilePictureKey: key }));  // Correct field name
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Assuming you have a `UserProfile` model in your backend.
       await client.models.UserProfile.create({
         name: formData.name,
-        profilePictureKey: formData.profilePictureKey,  
+        profilePictureKey: formData.profilePictureKey,  // Uploads the image key
       });
 
-      alert("profile added successfully!");
+      alert("Profile updated successfully!");
       setFormData({
-        Model: "",
         name: "",
         profilePictureKey: "",
       });
     } catch (error) {
-      console.error("Error adding profile:", error);
-      alert("Failed to add profile.");
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile.");
     }
   };
 
   return (
     <div className="main-menu">
-
       <h2>Change Profile</h2>
       <form className="flight_time" onSubmit={handleSubmit}>
         
         {/* 🔹 File Upload Drop Zone */}
         <div>
-          <label className="label">Upload Aircraft Image</label>
+          <label className="label">Upload Profile Picture</label> {/* Updated label */}
           <StorageManager
-            path="profile_pictures/"  // 🔹 Uploads images to "pictures/" in S3
+            path="profile_pictures/"  // 🔹 Uploads images to "profile_pictures/" in S3
             acceptedFileTypes={["image/*"]}
             maxFileCount={1}
             onUploadSuccess={handleFileUpload}
@@ -62,7 +60,12 @@ const Profile = () => {
 
         <div>
           <label className="label">Name</label>
-          <input className="input" name="name" value={formData.name} onChange={handleChange} />
+          <input
+            className="input"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
         </div>
 
         <button className="button" type="submit">Change Profile</button>

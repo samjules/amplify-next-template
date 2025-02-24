@@ -13,6 +13,7 @@ const WelcomeBar = () => {
     profilePictureKey: "",
   });
   const [imageUrl, setImageUrl] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -37,10 +38,15 @@ const WelcomeBar = () => {
           if (profile.profilePictureKey) {
             const url = await getUrl({ path: profile.profilePictureKey });
             setImageUrl(url);
+          } else {
+            setImageUrl("/default-image.png"); // Default image if no profile picture
           }
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);
+        setImageUrl("/default-image.png"); // Fallback if error occurs
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -50,10 +56,13 @@ const WelcomeBar = () => {
   return (
     <div className="welcomebar">
       <div className="welcome_image">
-        {imageUrl ? (
-          <img src={imageUrl} alt="User Profile" />
+        {loading ? (
+          <p>Loading...</p>
         ) : (
-          <img src="/default-image.png" alt="Default Profile" />
+          <img
+            src={imageUrl}
+            alt={userProfile.name ? `${userProfile.name}'s Profile` : "User Profile"}
+          />
         )}
       </div>
 
