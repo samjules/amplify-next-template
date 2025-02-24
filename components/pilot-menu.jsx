@@ -33,7 +33,7 @@ const MainMenu = ({
       {/* Add UserProfile toggle button */}
       <div>
         <button className="button-menu" onClick={onToggleUserProfile}>
-          <img className="person-icon" alt="" src="/user-profile-icon.svg" />
+          <img className="person-icon" alt="" src="/person.svg" />
           <div className="pilots">User Profile</div>
         </button>
       </div>

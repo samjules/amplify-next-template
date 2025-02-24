@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Use router to get dynamic params
 import { generateClient } from "aws-amplify/data";
 import { getUrl } from "@aws-amplify/storage";
+import "../app/app.css";
+
 
 const client = generateClient();
 
@@ -41,7 +43,7 @@ const AircraftDetails = ({ params }) => {
   }
 
   return (
-    <div>
+    <div className="aircraft_card">
       <h1>Aircraft: {aircraft.Tail_Number}</h1>
       {imageUrl && <img src={imageUrl} alt={`Aircraft ${aircraft.Tail_Number}`} />}
       <p>Model: {aircraft.Model}</p>
