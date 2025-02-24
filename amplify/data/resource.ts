@@ -11,7 +11,7 @@ const schema = a.schema({
     .model({
       Tail_Number: a.string(),
       Model: a.string(),
-      imageKey: a.string(),  // 🔹 Stores path to the image in "pictures/"
+      imageKey: a.string(),
       logbookKey: a.string(),
       TimeRemaining: a.integer(),
       TSMOH: a.integer(),
@@ -28,6 +28,15 @@ const schema = a.schema({
       aircraftId: a.string(), 
     })
     .authorization((allow) => [allow.publicApiKey()]),
+
+  // Add User Profile Schema
+  UserProfile: a
+    .model({
+      userId: a.string(),  // Unique identifier for the user
+      name: a.string(),  // User's name
+      profilePictureKey: a.string(),  // Profile picture key
+    })
+    .authorization((allow) => [allow.authenticated().to(["create", "read", "update"])]), // Only authenticated users can modify their profile
 });
 
 export type Schema = ClientSchema<typeof schema>;

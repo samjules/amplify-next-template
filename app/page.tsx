@@ -9,6 +9,7 @@ import Welcomebar from "../components/Welcomebar";
 import FlightTimeForm from "../components/flighttimeform";
 import AircraftCard from "../components/AircraftCard";
 import AddAircraft from "../components/AddAircraft"; // ✅ Import AddAircraft
+import UserProfile from "../components/UserProfileSettings"; // ✅ Import UserProfile
 
 export default function Home() {
   const { signOut } = useAuthenticator();
@@ -17,49 +18,59 @@ export default function Home() {
   const [showFlightTime, setShowFlightTime] = useState(false);
   const [showAircraft, setShowAircraft] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showUserProfile, setShowUserProfile] = useState(false); // ✅ New state for user profile toggle
 
   // ✅ Functions to toggle different views
   const toggleFlightTimeView = () => {
     setShowFlightTime((prevState) => !prevState);
     setShowAircraft(false);
     setShowSettings(false);
+    setShowUserProfile(false); // Hide user profile when switching
   };
 
   const toggleAircraftView = () => {
     setShowAircraft((prevState) => !prevState);
     setShowFlightTime(false);
     setShowSettings(false);
+    setShowUserProfile(false); // Hide user profile when switching
   };
 
   const toggleSettingsView = () => {
     setShowSettings((prevState) => !prevState);
     setShowAircraft(false);
     setShowFlightTime(false);
+    setShowUserProfile(false); // Hide user profile when switching
+  };
+
+  const toggleUserProfileView = () => {
+    setShowUserProfile((prevState) => !prevState);
+    setShowAircraft(false);
+    setShowFlightTime(false);
+    setShowSettings(false); // Hide settings and aircraft when switching
   };
 
   return (
     <div className="hero">
-
       {/* ✅ Navigation Bar */}
       <div className="Side-Menu">
-        <MainMenu 
-          onToggleFlightTime={toggleFlightTimeView} 
-          onToggleAircraft={toggleAircraftView} 
-          onToggleSettings={toggleSettingsView} 
+        <MainMenu
+          onToggleFlightTime={toggleFlightTimeView}
+          onToggleAircraft={toggleAircraftView}
+          onToggleSettings={toggleSettingsView}
+          onToggleUserProfile={toggleUserProfileView} // ✅ Add handler to toggle user profile
         />
-         <button className="button" onClick={signOut}>Sign out</button>
+        <button className="button" onClick={signOut}>Sign out</button>
       </div>
 
       {/* ✅ Main Content */}
       <div>
         <Welcomebar />
-        
+
         {/* ✅ Conditionally render components */}
         {showFlightTime && <FlightTimeForm />}
         {showAircraft && <AircraftCard />}
         {showSettings && <AddAircraft />}
-        
-       
+        {showUserProfile && <UserProfile userData={{ userId: "user123", name: "John Doe" }} />} {/* ✅ Show UserProfile here */}
       </div>
     </div>
   );

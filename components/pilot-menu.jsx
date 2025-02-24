@@ -1,7 +1,12 @@
 import React from "react";
 import "../app/app.css";
 
-const MainMenu = ({ onToggleFlightTime, onToggleAircraft, onToggleSettings }) => {
+const MainMenu = ({ 
+  onToggleFlightTime, 
+  onToggleAircraft, 
+  onToggleSettings,
+  onToggleUserProfile  // Add this to the destructured props
+}) => {
   return (
     <div className="main-menu">
       <div>
@@ -22,6 +27,14 @@ const MainMenu = ({ onToggleFlightTime, onToggleAircraft, onToggleSettings }) =>
         <button className="button-menu" onClick={onToggleSettings}>
           <img className="person-icon" alt="" src="/settings.svg" />
           <div className="pilots">Settings</div>
+        </button>
+      </div>
+
+      {/* Add UserProfile toggle button */}
+      <div>
+        <button className="button-menu" onClick={onToggleUserProfile}>
+          <img className="person-icon" alt="" src="/user-profile-icon.svg" />
+          <div className="pilots">User Profile</div>
         </button>
       </div>
     </div>
