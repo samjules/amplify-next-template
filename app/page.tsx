@@ -1,77 +1,106 @@
 "use client";
 
-import React, { useState } from "react";
-import "./../app/app.css";
-import "@aws-amplify/ui-react/styles.css";
-import { useAuthenticator } from "@aws-amplify/ui-react";
-import MainMenu from "../components/pilot-menu";
-import Welcomebar from "../components/Welcomebar";
-import FlightTimeForm from "../components/flighttimeform";
-import AircraftCard from "../components/AircraftCard";
-import AddAircraft from "../components/AddAircraft"; // ✅ Import AddAircraft
-import Profile from "../components/UserInfo";
+import { useState } from "react";
+import { signUp } from "aws-amplify/auth";
+import { useRouter } from "next/navigation";
+import "../app/app.css"
 
-export default function Home() {
-  const { user, signOut } = useAuthenticator();
-  // ✅ State for toggling views
-  const [showFlightTime, setShowFlightTime] = useState(false);
-  const [showAircraft, setShowAircraft] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  const [showUserProfile, setShowUserProfile] = useState(false); // ✅ New state for user profile toggle
+export default function SignupPage() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    profilePicture: null as File | null,
+  });
+  const [error, setError] = useState("");
 
-  // ✅ Functions to toggle different views
-  const toggleFlightTimeView = () => {
-    setShowFlightTime((prevState) => !prevState);
-    setShowAircraft(false);
-    setShowSettings(false);
-    setShowUserProfile(false); // Hide user profile when switching
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
+    if (name === "profilePicture" && files) {
+      setFormData({ ...formData, profilePicture: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-  const toggleAircraftView = () => {
-    setShowAircraft((prevState) => !prevState);
-    setShowFlightTime(false);
-    setShowSettings(false);
-    setShowUserProfile(false); // Hide user profile when switching
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
 
-  const toggleSettingsView = () => {
-    setShowSettings((prevState) => !prevState);
-    setShowAircraft(false);
-    setShowFlightTime(false);
-    setShowUserProfile(false); // Hide user profile when switching
-  };
+    try {
+      // Sign up user in Cognito
+      await signUp({
+        username: formData.email,
+        password: formData.password,
+        options: {
+          userAttributes: {
+            email: formData.email,
+            "custom:display_name": `${formData.firstName} ${formData.lastName}`,
+            "custom:profile_picture_key": formData.profilePicture
+              ? formData.profilePicture.name
+              : "",
+          },
+        },
+      });
 
-  const toggleUserProfileView = () => {
-    setShowUserProfile((prevState) => !prevState);
-    setShowAircraft(false);
-    setShowFlightTime(false);
-    setShowSettings(false); // Hide settings and aircraft when switching
+      // Redirect to checkout
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email }),
+      });
+
+      const { sessionId } = await res.json();
+      if (sessionId) {
+        router.push(`https://checkout.stripe.com/pay/${sessionId}`);
+      }
+    } catch (err: any) {
+      setError(err.message || "Something went wrong. Please try again.");
+    }
   };
 
   return (
-    <div className="hero">
-      {/* ✅ Navigation Bar */}
-      <div className="Side-Menu">
-        <MainMenu
-          onToggleFlightTime={toggleFlightTimeView}
-          onToggleAircraft={toggleAircraftView}
-          onToggleSettings={toggleSettingsView}
-          onToggleUserProfile={toggleUserProfileView} // ✅ Add handler to toggle user profile
+    <div>
+      <h1>Sign Up</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
         />
-              <h1>{user?.signInDetails?.loginId}'s todos</h1>
-        <button className="button" onClick={signOut}>Sign out</button>
-      </div>
-
-      {/* ✅ Main Content */}
-      <div>
-        <Welcomebar />
-
-        {/* ✅ Conditionally render components */}
-        {showFlightTime && <FlightTimeForm />}
-        {showAircraft && <AircraftCard />}
-        {showSettings && <AddAircraft />}
-        {showUserProfile && <Profile />}
-      </div>
+        <input
+          type="text"
+          name="firstName"
+          placeholder="First Name"
+          value={formData.firstName}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="lastName"
+          placeholder="Last Name"
+          value={formData.lastName}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <input type="file" name="profilePicture" onChange={handleChange} />
+        <button type="submit">Proceed to Payment</button>
+      </form>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
