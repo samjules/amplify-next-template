@@ -12,8 +12,7 @@ import AddAircraft from "../components/AddAircraft"; // ✅ Import AddAircraft
 import Profile from "../components/UserInfo";
 
 export default function Home() {
-  const { signOut } = useAuthenticator();
-
+  const { user, signOut } = useAuthenticator();
   // ✅ State for toggling views
   const [showFlightTime, setShowFlightTime] = useState(false);
   const [showAircraft, setShowAircraft] = useState(false);
@@ -59,6 +58,7 @@ export default function Home() {
           onToggleSettings={toggleSettingsView}
           onToggleUserProfile={toggleUserProfileView} // ✅ Add handler to toggle user profile
         />
+              <h1>{user?.signInDetails?.loginId}'s todos</h1>
         <button className="button" onClick={signOut}>Sign out</button>
       </div>
 

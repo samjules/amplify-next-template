@@ -5,7 +5,7 @@ const schema = a.schema({
     .model({
       content: a.string(),
     })
-    .authorization((allow) => [allow.publicApiKey()]),
+    .authorization((allow) => [allow.owner()]),
 
   Aircraft: a
     .model({
@@ -16,7 +16,7 @@ const schema = a.schema({
       TimeRemaining: a.integer(),
       TSMOH: a.integer(),
     })
-    .authorization((allow) => [allow.publicApiKey()]),
+    .authorization((allow) => [allow.owner()]),
 
   FlightTime: a
     .model({
@@ -27,9 +27,8 @@ const schema = a.schema({
       pilot: a.string(),
       aircraftId: a.string(), 
     })
-    .authorization((allow) => [allow.publicApiKey()]),
+    .authorization((allow) => [allow.authenticated()]),
 
-  // Add User Profile Schema
   UserProfile: a
     .model({
       userId: a.string(),  // Unique identifier for the user
@@ -44,9 +43,6 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: "apiKey",
-    apiKeyAuthorizationMode: {
-      expiresInDays: 30,
-    },
+    defaultAuthorizationMode: "userPool",  // 🔹 Matches the first file
   },
 });
