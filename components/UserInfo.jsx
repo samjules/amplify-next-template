@@ -1,92 +1,74 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../app/app.css";
 import { generateClient } from "aws-amplify/data";
 import { StorageManager } from "@aws-amplify/ui-react-storage";
 
 const client = generateClient();
 
-const ProfileSettings = () => {
+const Profile = () => {
   const [formData, setFormData] = useState({
+    Model: "",
     name: "",
-    imageKey: "",
+    profilePictureKey: "",
   });
 
-  // Fetch user profile data on mount (for example purposes, assume the user already exists)
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        // Fetch the user profile from your data source (e.g., client.models.UserProfile)
-        const { data } = await client.models.UserProfile.list();
-        if (data.length > 0) {
-          setFormData({ name: data[0].name, imageKey: data[0].profilePictureKey });
-        }
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
-
-    fetchUserProfile();
-  }, []);
-
-  // Handle input changes for name
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle file upload success (image upload)
+  // 🔹 Handles successful file upload
   const handleFileUpload = async ({ key }) => {
     setFormData((prev) => ({ ...prev, imageKey: key }));
   };
 
-  // Handle form submission (save profile changes)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await client.models.UserProfile.create({
         name: formData.name,
-        profilePictureKey: formData.imageKey, // S3 image path
+        profilePictureKey: formData.profilePictureKey,  
       });
-      alert("Profile updated successfully!");
+
+      alert("profile added successfully!");
+      setFormData({
+        Model: "",
+        name: "",
+        profilePictureKey: "",
+      });
     } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("Failed to update profile.");
+      console.error("Error adding profile:", error);
+      alert("Failed to add profile.");
     }
   };
 
   return (
-    <div className="profile-settings">
-      <h2>Profile Settings</h2>
-      <form className="profile-form" onSubmit={handleSubmit}>
-        {/* Name Input */}
-        <div>
-          <label className="label">Name</label>
-          <input
-            className="input"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter your name"
-          />
-        </div>
+    <div className="main-menu">
 
-        {/* Profile Image Upload Drop Zone */}
+      <h2>Change Profile</h2>
+      <form className="flight_time" onSubmit={handleSubmit}>
+        
+        {/* 🔹 File Upload Drop Zone */}
         <div>
-          <label className="label">Upload Profile Image</label>
+          <label className="label">Upload Aircraft Image</label>
           <StorageManager
-            path="profile-pictures/" // Images will be uploaded to S3 under this path
+            path="profile_pictures/"  // 🔹 Uploads images to "pictures/" in S3
             acceptedFileTypes={["image/*"]}
             maxFileCount={1}
             onUploadSuccess={handleFileUpload}
           />
         </div>
 
-        {/* Submit Button */}
-        <button className="button" type="submit">Save Profile</button>
+        <div>
+          <label className="label">Name</label>
+          <input className="input" name="name" value={formData.name} onChange={handleChange} />
+        </div>
+
+        <button className="button" type="submit">Change Profile</button>
       </form>
     </div>
   );
 };
 
-export default ProfileSettings;
+export default Profile;

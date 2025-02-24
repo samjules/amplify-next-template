@@ -9,7 +9,7 @@ import Welcomebar from "../components/Welcomebar";
 import FlightTimeForm from "../components/flighttimeform";
 import AircraftCard from "../components/AircraftCard";
 import AddAircraft from "../components/AddAircraft"; // ✅ Import AddAircraft
-import Userinfo from "../components/UserInfo";
+import Profile from "../components/UserInfo";
 
 export default function Home() {
   const { signOut } = useAuthenticator();
@@ -70,7 +70,7 @@ export default function Home() {
         {showFlightTime && <FlightTimeForm />}
         {showAircraft && <AircraftCard />}
         {showSettings && <AddAircraft />}
-        {showUserProfile && <Userinfo />}
+        {showUserProfile && <Profile />}
       </div>
     </div>
   );

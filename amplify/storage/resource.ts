@@ -15,5 +15,10 @@ export const storage = defineStorage({
       allow.authenticated.to(["read", "write"]),  // 🔹 Authenticated users can upload
       allow.guest.to(["read"]),  // 🔹 Guests can view images
     ],
+
+    "profile_pictures/*": [
+      allow.authenticated.to(["read", "write"]),  // 🔹 Authenticated users can upload
+      allow.guest.to(["read"]),  // 🔹 Guests can view images
+    ],
   }),
 });
