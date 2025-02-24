@@ -55,6 +55,7 @@ const AddAircraft = () => {
 
   return (
     <div className="main-menu">
+
       <h2>Add Aircraft</h2>
       <form className="flight_time" onSubmit={handleSubmit}>
         <div>

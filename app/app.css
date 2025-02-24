@@ -18,7 +18,6 @@ body{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 10px;
   
 }
 .person-icon {
@@ -70,9 +69,8 @@ body{
   gap: 10px;
   margin: 10px;
   font-family: 'Bebas Neue';
-
-
 }
+
 
 .sub-menu{
   display: flex;
@@ -158,4 +156,12 @@ overflow: hidden; /* Hides excess parts */
   display: flex;
   flex-direction: row;
 }
-
+.Side-Menu{
+  flex-basis: 20%;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  border-radius: 25px;
+  border: 1px solid black;
+  align-items: center;
+}

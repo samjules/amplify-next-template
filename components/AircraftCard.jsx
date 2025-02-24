@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { generateClient } from "aws-amplify/data";
 import { getUrl } from "@aws-amplify/storage"; // Import S3 URL fetcher
-import "../app/app.css"; // Keeping styles
+import Link from "next/link"; // Import Next.js Link for navigation
+import "../app/app.css"; // Import styles
 
 const client = generateClient(); // AWS Amplify Data Client
 
@@ -25,11 +26,13 @@ const AircraftCard = () => {
   // Fetch images dynamically from S3
   const fetchAircraftImages = useCallback(async (aircraftData) => {
     const urls = {};
+
     await Promise.all(
       aircraftData.map(async (aircraft) => {
         if (aircraft.imageKey) {
           try {
-            const url = await getUrl({ path: `aircraft-images/${aircraft.imageKey}` });
+            // Fetch the S3 URL using the correct key
+            const { url } = await getUrl({ path: aircraft.imageKey });
             urls[aircraft.id] = url;
           } catch (error) {
             console.error(`Error fetching image for ${aircraft.Tail_Number}:`, error);
@@ -37,7 +40,8 @@ const AircraftCard = () => {
         }
       })
     );
-    setImageUrls(urls); // Ensure state updates properly
+
+    setImageUrls(urls); // Update state with URLs
   }, []);
 
   // Fetch data when component mounts
@@ -54,9 +58,11 @@ const AircraftCard = () => {
           aircraftList.map((aircraft) => (
             <div key={aircraft.id} className="aircraft-card">
               <h2>{aircraft.Tail_Number}</h2>
+
+              {/* Display the image or a placeholder */}
               <img
                 className="welcome_image"
-                src={imageUrls[aircraft.id] || "/loading-placeholder.jpg"} 
+                src={imageUrls[aircraft.id] || "/default-aircraft.jpg"} 
                 alt={`Aircraft ${aircraft.Tail_Number}`}
               />
 
@@ -64,8 +70,15 @@ const AircraftCard = () => {
               <h3>Time Remaining: {aircraft.TimeRemaining ?? "N/A"}</h3>
               <h3>Equipment List: [Coming Soon]</h3>
 
-              <button className="button">Aircraft Flight Time</button>
-              <button className="button">Aircraft Logbooks</button>
+              {/* 🚀 Link to Dynamic Aircraft Flight Time Page */}
+              <Link href={`/aircraft/${aircraft.Tail_Number}`}>
+                <button className="button">Aircraft Flight Time</button>
+              </Link>
+
+              {/* 🚀 Link to Aircraft Logbooks (if applicable) */}
+              <Link href={`/logbooks/${aircraft.Tail_Number}`}>
+                <button className="button">Aircraft Logbooks</button>
+              </Link>
             </div>
           ))
         ) : (

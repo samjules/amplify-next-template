@@ -39,13 +39,15 @@ export default function Home() {
 
   return (
     <div className="hero">
+
       {/* ✅ Navigation Bar */}
-      <div>
+      <div className="Side-Menu">
         <MainMenu 
           onToggleFlightTime={toggleFlightTimeView} 
           onToggleAircraft={toggleAircraftView} 
           onToggleSettings={toggleSettingsView} 
         />
+         <button className="button" onClick={signOut}>Sign out</button>
       </div>
 
       {/* ✅ Main Content */}
@@ -57,7 +59,7 @@ export default function Home() {
         {showAircraft && <AircraftCard />}
         {showSettings && <AddAircraft />}
         
-        <button className="button" onClick={signOut}>Sign out</button>
+       
       </div>
     </div>
   );
